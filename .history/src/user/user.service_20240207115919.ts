@@ -1,8 +1,16 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { CreateUserDto, GetUserParams } from './dto/dto/user.dto';
+import { CreateUserDto } from './dto/dto/user.dto';
 import { hash } from 'bcrypt';
 import { Prisma, User } from '@prisma/client';
+
+interface GetUserParams {
+  skip?: number;
+  take?: number;
+  cursor?: Prisma.UserWhereUniqueInput;
+  where?: Prisma.UserWhereInput;
+  orderBy?: Prisma.UserOrderByWithRelationInput;
+}
 
 @Injectable()
 export class UserService {

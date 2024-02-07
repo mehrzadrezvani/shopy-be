@@ -15,6 +15,6 @@ export class UserController {
 
   @Get('')
   async getUsers(@Query('searchString') searchParams: GetUserParams) {
-    return await this.userService.users(searchParams);
+    return await this.userService.users();
   }
 }

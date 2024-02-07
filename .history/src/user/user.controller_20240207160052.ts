@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { GetUserParams } from './dto/dto/user.dto';
@@ -13,8 +13,8 @@ export class UserController {
     return await this.userService.findById(id);
   }
 
-  @Get('')
-  async getUsers(@Query('searchString') searchParams: GetUserParams) {
-    return await this.userService.users(searchParams);
+  @Get(':searchString')
+  async getUsers(@Param('searchString') searchParams: GetUserParams) {
+    return await this.userService.users();
   }
 }

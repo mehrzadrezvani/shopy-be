@@ -1,8 +1,9 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { CreateUserDto, GetUserParams } from './dto/dto/user.dto';
+import { CreateUserDto } from './dto/dto/user.dto';
 import { hash } from 'bcrypt';
-import { Prisma, User } from '@prisma/client';
+
+interface GetUserParams {}
 
 @Injectable()
 export class UserService {
@@ -42,7 +43,13 @@ export class UserService {
       },
     });
   }
-  async users(params: GetUserParams): Promise<User[]> {
+  async users(params: {
+    skip?: number;
+    take?: number;
+    cursor?: PrismaService.UserWhereUniqueInput;
+    where?: PrismaService.UserWhereInput;
+    orderBy?: PrismaService.UserOrderByWithRelationInput;
+  }): Promise<User[]> {
     const { skip, take, cursor, where, orderBy } = params;
     return this.prisma.user.findMany({
       skip,
